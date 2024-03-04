@@ -4,7 +4,7 @@ import { UserService } from '../user/user.service';
 import { CreateUserDto } from "../user/create-user.dto";
 import { LoginUserDto } from '../user/login-user.dto';
 import * as bcrypt from 'bcrypt';
-
+import { UnauthorizedException, NotFoundException } from '@nestjs/common';
 @Injectable()
 export class AuthService {
   constructor(
@@ -25,12 +25,12 @@ export class AuthService {
 
     const user = await this.userService.findByEmail(email);
     if (!user) {
-      throw new Error('User was not found');
+      throw new NotFoundException({ error: true, message: 'User not found' });
     }
   
     const isPasswordMatching = await bcrypt.compare(password, user.password);
     if (!isPasswordMatching) {
-      throw new Error('Incorrect password');
+      throw new UnauthorizedException({ error: true, message: 'Incorrect password' });
     }
   
     const payload = { email: user.email, sub: user.id };
