@@ -2,7 +2,6 @@ import { Module, NestModule, MiddlewareConsumer  } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { NewsModule } from './news/news.module';
 import { ContactModule } from './contact/contact.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
@@ -13,7 +12,6 @@ import { LoggerMiddleware } from './logger.middleware';
 
 import { User } from './user/user.entity';
 import { Contact } from './contact/contact.entity';
-import { News } from './news/news.entity';
 
 @Module({
   imports: [
@@ -31,7 +29,7 @@ import { News } from './news/news.entity';
           username: configService.get<string>('DB_USERNAME'),
           password: configService.get<string>('DB_PASSWORD'),
           database: configService.get<string>('DB_DATABASE'),
-          entities: [User, Contact, News],
+          entities: [User, Contact],
           //logging: true,
           synchronize: configService.get<boolean>('TYPEORM_SYNC', false),
         };
@@ -60,7 +58,6 @@ import { News } from './news/news.entity';
       },
     }),
     AuthModule,
-    NewsModule,
     ContactModule,
     UserModule
   ],
