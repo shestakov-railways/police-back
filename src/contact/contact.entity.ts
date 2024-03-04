@@ -1,13 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
-@Entity()
+@Entity({ name: "contact" })
 export class Contact {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: "bigint", unsigned: true })
   id: number;
 
-  @Column()
+  @Column({ type: "varchar", name: "email" })
   email: string;
 
-  @Column('text')
+  @Column({ type: "text", name: "message" })
   message: string;
 }

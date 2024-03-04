@@ -10,6 +10,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 
+import { User } from './user/user.entity';
+import { Contact } from './contact/contact.entity';
+import { News } from './news/news.entity';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,8 +29,9 @@ import { UserModule } from './user/user.module';
           username: configService.get<string>('DB_USERNAME'),
           password: configService.get<string>('DB_PASSWORD'),
           database: configService.get<string>('DB_DATABASE'),
-          entities: [UserModule, ContactModule, AuthModule, NewsModule],
-          synchronize: true, //configService.get<boolean>('TYPEORM_SYNC', true)
+          entities: [User, Contact, News],
+          logging: true,
+          synchronize: configService.get<boolean>('TYPEORM_SYNC', true),
         };
       },
       inject: [ConfigService],

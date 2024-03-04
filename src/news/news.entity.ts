@@ -1,16 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
-@Entity()
+@Entity({ name: "news" })
 export class News {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: "bigint", unsigned: true })
   id: number;
 
-  @Column()
+  @Column({ type: "varchar", name: "title" })
   title: string;
 
-  @Column('text')
+  @Column({ type: "text", name: "content" })
   content: string;
 
-  @Column()
+  @Column({ type: "varchar", name: "image" })
   image: string;
 }
