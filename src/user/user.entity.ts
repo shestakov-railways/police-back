@@ -4,11 +4,11 @@ export class User {
   @PrimaryGeneratedColumn({ type: "bigint", unsigned: true })
   id: number;
 
-  @Column({ type: "varchar", name: "name" })
-  name: string;
-
-  @Column({ type: "varchar", name: "email" })
+  @Column({ type: "varchar", name: "email", unique: true })
   email: string;
+
+  @Column({ type: "varchar", name: "phone" })
+  phone: string;
 
   @Column({ type: "varchar", name: "password" })
   password: string;

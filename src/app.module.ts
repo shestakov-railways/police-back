@@ -31,8 +31,8 @@ import { News } from './news/news.entity';
           password: configService.get<string>('DB_PASSWORD'),
           database: configService.get<string>('DB_DATABASE'),
           entities: [User, Contact, News],
-          logging: true,
-          synchronize: configService.get<boolean>('TYPEORM_SYNC', true),
+          //logging: true,
+          synchronize: configService.get<boolean>('TYPEORM_SYNC', false),
         };
       },
       inject: [ConfigService],
