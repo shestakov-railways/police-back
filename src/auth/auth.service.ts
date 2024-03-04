@@ -17,7 +17,11 @@ export class AuthService {
     userDto.password = hashedPassword;
 
     const user = await this.userService.create(userDto);
-    return user;
+
+    const payload = { email: user.email, sub: user.id };
+    const access_token = this.jwtService.sign(payload);
+
+    return { access_token };
   }
 
   async signIn(loginUserDto: LoginUserDto) {
@@ -34,8 +38,10 @@ export class AuthService {
     }
   
     const payload = { email: user.email, sub: user.id };
+    const access_token = this.jwtService.sign(payload);
+    
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token,
     };
   }
 }
