@@ -27,13 +27,14 @@ export class AuthService {
     userDto.password = hashedPassword;
 
     const user = await this.userService.create(userDto);
+    const { id, password, ...userWithoutSensitiveData } = user;
 
     const payload = { email: user.email, sub: user.id };
     const access_token = this.jwtService.sign(payload);
 
     return {
       access_token,
-      user
+      user: userWithoutSensitiveData
     };
   }
 
@@ -52,10 +53,11 @@ export class AuthService {
   
     const payload = { email: user.email, sub: user.id };
     const access_token = this.jwtService.sign(payload);
+    const { id, password: passwordTwo, ...userWithoutSensitiveData } = user;
 
     return {
       access_token,
-      user,
+      user: userWithoutSensitiveData,
     };
   }
 }
