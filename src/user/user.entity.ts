@@ -7,7 +7,7 @@ export class User {
   @Column({ type: "varchar", name: "email", unique: true })
   email: string;
 
-  @Column({ type: "varchar", name: "phone" })
+  @Column({ type: "varchar", name: "phone", unique: true })
   phone: string;
 
   @Column({ type: "varchar", name: "password" })
