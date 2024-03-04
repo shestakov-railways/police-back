@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { CreateUserDto } from "../user/create-user.dto";
+import { LoginUserDto } from '../user/login-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  async register(userDto: CreateUserDto): Promise<any> {
+  async signUp(userDto: CreateUserDto): Promise<any> {
     const hashedPassword = await bcrypt.hash(userDto.password, 12);
     userDto.password = hashedPassword;
 
@@ -19,7 +20,9 @@ export class AuthService {
     return user;
   }
 
-  async login(email: string, password: string) {
+  async signIn(loginUserDto: LoginUserDto) {
+    const { email, password } = loginUserDto;
+
     const user = await this.userService.findByEmail(email);
     if (!user) {
       throw new Error('User was not found');
