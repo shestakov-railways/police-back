@@ -15,6 +15,10 @@ export class LoggerMiddleware implements NestMiddleware {
       this.logger.log(`${method} ${originalUrl} ${statusCode} ${contentLength} - ${userAgent}`);
     });
 
+    res.on('error', (error) => {
+        this.logger.error(`Error occurred: ${error.message}`);
+    });
+
     next();
   }
 }
