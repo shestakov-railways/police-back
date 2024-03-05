@@ -12,6 +12,19 @@ import { LoggerMiddleware } from './logger.middleware';
 
 import { User } from './user/user.entity';
 import { Contact } from './contact/contact.entity';
+import { ReportService } from './report/report.service';
+import { ReportController } from './report/report.controller';
+import { ReportModule } from './report/report.module';
+import { ReportImagesModule } from './report_images/report_images.module';
+import { CriminalController } from './criminal/criminal.controller';
+import { CriminalModule } from './criminal/criminal.module';
+import { AdditionalInfoService } from './additional-info/additional-info.service';
+import { AdditionalInfoModule } from './additional-info/additional-info.module';
+
+import { Criminal } from './criminal/criminal.entity';
+import { Report } from './report/report.entity';
+import { Image } from './report_images/report_images.entity';
+import { AdditionalInfo } from './additional-info/additional-info.entity';
 
 @Module({
   imports: [
@@ -29,7 +42,7 @@ import { Contact } from './contact/contact.entity';
           username: configService.get<string>('DB_USERNAME'),
           password: configService.get<string>('DB_PASSWORD'),
           database: configService.get<string>('DB_DATABASE'),
-          entities: [User, Contact],
+          entities: [User, Contact, Criminal, Report, Image, AdditionalInfo],
           //logging: true,
           synchronize: configService.get<boolean>('TYPEORM_SYNC', false),
         };
@@ -59,10 +72,14 @@ import { Contact } from './contact/contact.entity';
     }),
     AuthModule,
     ContactModule,
-    UserModule
+    UserModule,
+    ReportModule,
+    ReportImagesModule,
+    CriminalModule,
+    AdditionalInfoModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, ReportController, CriminalController],
+  providers: [AppService, ReportService, AdditionalInfoService],
 })
 
 export class AppModule implements NestModule {
